@@ -1,8 +1,9 @@
 # DF model used for non-defended dataset
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Conv1D, MaxPooling1D, BatchNormalization
-from keras.layers.core import Activation, Flatten, Dense, Dropout
-from keras.layers.advanced_activations import ELU
+from tensorflow.keras.layers import Activation, Flatten, Dense, Dropout
+from tensorflow.keras.layers import ELU
 from keras.initializers import glorot_uniform
 
 class DFNet:

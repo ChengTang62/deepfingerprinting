@@ -14,8 +14,8 @@ from keras import backend as K
 from utility import LoadDataNoDefCW
 from Model_NoDef import DFNet
 import random
-from keras.utils import np_utils
-from keras.optimizers import Adamax
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import Adamax
 import numpy as np
 import os
 
@@ -28,16 +28,19 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 description = "Training and evaluating DF model for closed-world scenario on non-defended dataset"
 
-print description
+print(description)
 # Training the DF model
-NB_EPOCH = 30   # Number of training epoch
-print "Number of Epoch: ", NB_EPOCH
+NB_EPOCH = 36   # Number of training epoch
+print("Number of Epoch: ", NB_EPOCH)
 BATCH_SIZE = 128 # Batch size
 VERBOSE = 2 # Output display mode
-LENGTH = 5000 # Packet sequence length
-OPTIMIZER = Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0) # Optimizer
+# LENGTH = 46199 # Packet sequence length for position controller
+# LENGTH = 81383 #  Packet sequence length for velocity controller
+LENGTH = 44764 # Packet sequence length for position controller
 
-NB_CLASSES = 95 # number of outputs = number of classes
+OPTIMIZER = Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=1e-08) # Optimizer
+
+NB_CLASSES = 4 # number of outputs = number of classes
 INPUT_SHAPE = (LENGTH,1)
 
 
@@ -45,7 +48,7 @@ INPUT_SHAPE = (LENGTH,1)
 print ("Loading and preparing data for training, and evaluating the model")
 X_train, y_train, X_valid, y_valid, X_test, y_test = LoadDataNoDefCW()
 # Please refer to the dataset format in readme
-K.set_image_dim_ordering("tf") # tf is tensorflow
+# K.set_image_dim_ordering("tf") # tf is tensorflow
 
 # Convert data as float32 type
 X_train = X_train.astype('float32')
@@ -64,10 +67,9 @@ print(X_train.shape[0], 'train samples')
 print(X_valid.shape[0], 'validation samples')
 print(X_test.shape[0], 'test samples')
 
-# Convert class vectors to categorical classes matrices
-y_train = np_utils.to_categorical(y_train, NB_CLASSES)
-y_valid = np_utils.to_categorical(y_valid, NB_CLASSES)
-y_test = np_utils.to_categorical(y_test, NB_CLASSES)
+y_train = to_categorical(y_train, NB_CLASSES)
+y_valid = to_categorical(y_valid, NB_CLASSES)
+y_test = to_categorical(y_test, NB_CLASSES)
 
 # Building and training model
 print ("Building and training DF model")
