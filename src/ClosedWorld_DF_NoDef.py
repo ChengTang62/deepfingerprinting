@@ -30,18 +30,16 @@ description = "Training and evaluating DF model for closed-world scenario on non
 
 print(description)
 # Training the DF model
-NB_EPOCH = 36   # Number of training epoch
+NB_EPOCH = 34   # Number of training epoch
 print("Number of Epoch: ", NB_EPOCH)
 BATCH_SIZE = 128 # Batch size
 VERBOSE = 2 # Output display mode
-# LENGTH = 46199 # Packet sequence length for position controller
-# LENGTH = 81383 #  Packet sequence length for velocity controller
-LENGTH = 44764 # Packet sequence length for position controller
+LENGTH = 16270 # Packet sequence length for position controller
 
 OPTIMIZER = Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=1e-08) # Optimizer
 
 NB_CLASSES = 4 # number of outputs = number of classes
-INPUT_SHAPE = (LENGTH,1)
+INPUT_SHAPE = (LENGTH,3)
 
 
 # Data: shuffled and split between train and test sets
@@ -59,9 +57,9 @@ y_valid = y_valid.astype('float32')
 y_test = y_test.astype('float32')
 
 # we need a [Length x 1] x n shape as input to the DF CNN (Tensorflow)
-X_train = X_train[:, :,np.newaxis]
-X_valid = X_valid[:, :,np.newaxis]
-X_test = X_test[:, :,np.newaxis]
+# X_train = X_train[:, :,np.newaxis]
+# X_valid = X_valid[:, :,np.newaxis]
+# X_test = X_test[:, :,np.newaxis]
 
 print(X_train.shape[0], 'train samples')
 print(X_valid.shape[0], 'validation samples')

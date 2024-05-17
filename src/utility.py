@@ -8,7 +8,7 @@ def LoadDataNoDefCW():
 
     print("Loading non-defended dataset for closed-world scenario")
     # Point to the directory storing data
-    dataset_dir = './df/dataset/ClosedWorld/NoDef/'
+    dataset_dir = '/content/drive/MyDrive/kinova_ros_action_data/df_data/Merged/'
 
     # X represents a sequence of traffic directions
     # y represents a sequence of corresponding label (website's label)
